@@ -1,0 +1,788 @@
+{
+	"info": {
+		"_postman_id": "d7721b97-9505-4999-bf80-79ca72123cdf",
+		"name": "POS SYSTEM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11446859"
+	},
+	"item": [
+		{
+			"name": "GET Básica",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}admins",
+					"host": [
+						"{{endpoint}}admins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Datos Específicos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}products?select=title_product,id_product,img_product",
+					"host": [
+						"{{endpoint}}products"
+					],
+					"query": [
+						{
+							"key": "select",
+							"value": "title_product,id_product,img_product"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Filtrar datos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}products?select=*&linkTo=id_category_product,id_office_product&equalTo=1,1",
+					"host": [
+						"{{endpoint}}products"
+					],
+					"query": [
+						{
+							"key": "select",
+							"value": "*"
+						},
+						{
+							"key": "linkTo",
+							"value": "id_category_product,id_office_product"
+						},
+						{
+							"key": "equalTo",
+							"value": "1,1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Ordenar Datos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}products?orderBy=id_product&orderMode=DESC",
+					"host": [
+						"{{endpoint}}products"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "id_product"
+						},
+						{
+							"key": "orderMode",
+							"value": "DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Limitar Datos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}products?orderBy=id_product&orderMode=ASC&startAt=0&endAt=5",
+					"host": [
+						"{{endpoint}}products"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "id_product"
+						},
+						{
+							"key": "orderMode",
+							"value": "ASC"
+						},
+						{
+							"key": "startAt",
+							"value": "0"
+						},
+						{
+							"key": "endAt",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Datos Relacionados",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}relations?rel=purchases,products,offices&type=purchase,product,office",
+					"host": [
+						"{{endpoint}}relations"
+					],
+					"query": [
+						{
+							"key": "rel",
+							"value": "purchases,products,offices"
+						},
+						{
+							"key": "type",
+							"value": "purchase,product,office"
+						},
+						{
+							"key": "select",
+							"value": "id_product,id_office,id_purchase",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Datos Relacionados con Filtro",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}relations?rel=purchases,products,offices&type=purchase,product,office&linkTo=id_office&equalTo=1",
+					"host": [
+						"{{endpoint}}relations"
+					],
+					"query": [
+						{
+							"key": "rel",
+							"value": "purchases,products,offices"
+						},
+						{
+							"key": "type",
+							"value": "purchase,product,office"
+						},
+						{
+							"key": "select",
+							"value": "id_product,id_office,id_purchase",
+							"disabled": true
+						},
+						{
+							"key": "linkTo",
+							"value": "id_office"
+						},
+						{
+							"key": "equalTo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Búsqueda con Filtro",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}products?linkTo=title_product,id_category_product&search=nike,2",
+					"host": [
+						"{{endpoint}}products"
+					],
+					"query": [
+						{
+							"key": "linkTo",
+							"value": "title_product,id_category_product"
+						},
+						{
+							"key": "search",
+							"value": "nike,2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Búsqueda con Filtro entre Relaciones",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}relations?linkTo=title_product,id_category_product&search=nike,2&rel=products,categories&type=product,category",
+					"host": [
+						"{{endpoint}}relations"
+					],
+					"query": [
+						{
+							"key": "linkTo",
+							"value": "title_product,id_category_product"
+						},
+						{
+							"key": "search",
+							"value": "nike,2"
+						},
+						{
+							"key": "rel",
+							"value": "products,categories"
+						},
+						{
+							"key": "type",
+							"value": "product,category"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Rangos de Datos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}sales?linkTo=date_created_sale&between1=2024-12-01&between2=2024-12-31&filterTo=status_sale&inTo=Completada",
+					"host": [
+						"{{endpoint}}sales"
+					],
+					"query": [
+						{
+							"key": "linkTo",
+							"value": "date_created_sale"
+						},
+						{
+							"key": "between1",
+							"value": "2024-12-01"
+						},
+						{
+							"key": "between2",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "filterTo",
+							"value": "status_sale"
+						},
+						{
+							"key": "inTo",
+							"value": "Completada"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Rangos de Datos entre Relaciones",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{endpoint}}relations?linkTo=date_created_sale&between1=2024-12-01&between2=2024-12-31&filterTo=status_sale&inTo=Completada&rel=sales,orders&type=sale,order",
+					"host": [
+						"{{endpoint}}relations"
+					],
+					"query": [
+						{
+							"key": "linkTo",
+							"value": "date_created_sale"
+						},
+						{
+							"key": "between1",
+							"value": "2024-12-01"
+						},
+						{
+							"key": "between2",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "filterTo",
+							"value": "status_sale"
+						},
+						{
+							"key": "inTo",
+							"value": "Completada"
+						},
+						{
+							"key": "rel",
+							"value": "sales,orders"
+						},
+						{
+							"key": "type",
+							"value": "sale,order"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Registro para auth",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email_admin",
+							"value": "admin@pos.com",
+							"type": "text"
+						},
+						{
+							"key": "password_admin",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "status_admin",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "rol_admin",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "permissions_admin",
+							"value": "{\"todo\":\"on\"}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{endpoint}}admins?register=true&suffix=admin",
+					"host": [
+						"{{endpoint}}admins"
+					],
+					"query": [
+						{
+							"key": "register",
+							"value": "true"
+						},
+						{
+							"key": "suffix",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email_admin",
+							"value": "admin@pos.com",
+							"type": "text"
+						},
+						{
+							"key": "password_admin",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{endpoint}}admins?login=true&suffix=admin",
+					"host": [
+						"{{endpoint}}admins"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "true"
+						},
+						{
+							"key": "suffix",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Crear registro",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "concept_bill",
+							"value": "fotocopias",
+							"type": "text"
+						},
+						{
+							"key": "cost_bill",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "id_admin_bill",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "id_office_bill",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{endpoint}}bills?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MzA1NTcsImV4cCI6MTczNDcxNjk1NywiZGF0YSI6eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluQHBvcy5jb20ifX0.c5W7bar-Z4DTG095lCNMXJ5m1_U1jJ4MnmJbNFb8AcM&table=admins&suffix=admin",
+					"host": [
+						"{{endpoint}}bills"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MzA1NTcsImV4cCI6MTczNDcxNjk1NywiZGF0YSI6eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluQHBvcy5jb20ifX0.c5W7bar-Z4DTG095lCNMXJ5m1_U1jJ4MnmJbNFb8AcM"
+						},
+						{
+							"key": "table",
+							"value": "admins"
+						},
+						{
+							"key": "suffix",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Editar registro",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "cost_bill",
+							"value": "15",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{endpoint}}bills?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MzA1NTcsImV4cCI6MTczNDcxNjk1NywiZGF0YSI6eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluQHBvcy5jb20ifX0.c5W7bar-Z4DTG095lCNMXJ5m1_U1jJ4MnmJbNFb8AcM&table=admins&suffix=admin&id=1&nameId=id_bill",
+					"host": [
+						"{{endpoint}}bills"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MzA1NTcsImV4cCI6MTczNDcxNjk1NywiZGF0YSI6eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluQHBvcy5jb20ifX0.c5W7bar-Z4DTG095lCNMXJ5m1_U1jJ4MnmJbNFb8AcM"
+						},
+						{
+							"key": "table",
+							"value": "admins"
+						},
+						{
+							"key": "suffix",
+							"value": "admin"
+						},
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "nameId",
+							"value": "id_bill"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Eliminar registro",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{endpoint}}bills?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MzA1NTcsImV4cCI6MTczNDcxNjk1NywiZGF0YSI6eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluQHBvcy5jb20ifX0.c5W7bar-Z4DTG095lCNMXJ5m1_U1jJ4MnmJbNFb8AcM&table=admins&suffix=admin&id=1&nameId=id_bill",
+					"host": [
+						"{{endpoint}}bills"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ2MzA1NTcsImV4cCI6MTczNDcxNjk1NywiZGF0YSI6eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluQHBvcy5jb20ifX0.c5W7bar-Z4DTG095lCNMXJ5m1_U1jJ4MnmJbNFb8AcM"
+						},
+						{
+							"key": "table",
+							"value": "admins"
+						},
+						{
+							"key": "suffix",
+							"value": "admin"
+						},
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "nameId",
+							"value": "id_bill"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST con excepción",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "cost_bill",
+							"value": "20",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{endpoint}}bills?token=no&except=id_bill",
+					"host": [
+						"{{endpoint}}bills"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "no"
+						},
+						{
+							"key": "except",
+							"value": "id_bill"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT con excepción",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "cost_bill",
+							"value": "30",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{endpoint}}bills?token=no&except=id_bill&id=2&nameId=id_bill",
+					"host": [
+						"{{endpoint}}bills"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "no"
+						},
+						{
+							"key": "except",
+							"value": "id_bill"
+						},
+						{
+							"key": "id",
+							"value": "2"
+						},
+						{
+							"key": "nameId",
+							"value": "id_bill"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE con excepción",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{endpoint}}bills?token=no&except=id_bill&id=2&nameId=id_bill",
+					"host": [
+						"{{endpoint}}bills"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "no"
+						},
+						{
+							"key": "except",
+							"value": "id_bill"
+						},
+						{
+							"key": "id",
+							"value": "2"
+						},
+						{
+							"key": "nameId",
+							"value": "id_bill"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
