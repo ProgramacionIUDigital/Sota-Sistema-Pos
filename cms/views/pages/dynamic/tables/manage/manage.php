@@ -95,14 +95,14 @@ $(document).on("click", ".btn-guardar-custom", function(e){
     var form = $("#form-manage");
     var camposAValidar = [];
 
-    // DETECTAR EL MÓDULO ACTUAL
     var moduleData = JSON.parse(form.find('input[name="module"]').val());
     var nombreModulo = moduleData.url_page; 
 
     /*=============================================
-    CONFIGURACIÓN POR MÓDULO (MANTENIENDO TODO)
+    CONFIGURACIÓN POR MÓDULO (Lógica Acumulada)
     =============================================*/
     
+    // PRODUCTOS
     if (nombreModulo.includes("product")) {
         camposAValidar = [
             { id: "title_product",    nombre: "Nombre del Producto" },
@@ -112,6 +112,7 @@ $(document).on("click", ".btn-guardar-custom", function(e){
             { id: "discount_product", nombre: "Descuento" }
         ];
     } 
+    // COMPRAS
     else if (nombreModulo.includes("purchase") || nombreModulo.includes("compra")) {
         camposAValidar = [
             { id: "supplier", nombre: "Proveedor" },
@@ -120,6 +121,7 @@ $(document).on("click", ".btn-guardar-custom", function(e){
             { id: "contact",  nombre: "Teléfono" }
         ];
     }
+    // CATEGORÍAS
     else if (nombreModulo.includes("categor")) {
         camposAValidar = [
             { id: "title_category",  nombre: "Categoría" },
@@ -128,8 +130,28 @@ $(document).on("click", ".btn-guardar-custom", function(e){
             { id: "status_category", nombre: "Estado" }
         ];
     }
+    // CLIENTES
+    else if (nombreModulo.includes("client")) {
+        camposAValidar = [
+            { id: "id_document_client", nombre: "Documento de Identidad" },
+            { id: "dni_client",        nombre: "Documento (DNI)" },
+            { id: "name_client",       nombre: "Nombre" },
+            { id: "lastname_client",   nombre: "Apellido" },
+            { id: "email_client",      nombre: "Email" },
+            { id: "address_client",    nombre: "Dirección" },
+            { id: "phone_client",      nombre: "Teléfono" },
+            { id: "id_office_client",  nombre: "Sucursal" }
+        ];
+    }
+    // SUCURSALES (Basado en title_office de tu BD)
+    else if (nombreModulo.includes("office") || nombreModulo.includes("sucursal")) {
+        camposAValidar = [
+            { id: "title_office",   nombre: "Nombre de la Sucursal" },
+            { id: "address_office", nombre: "Dirección" },
+            { id: "phone_office",   nombre: "Teléfono" }
+        ];
+    }
 
-    // Limpiar estilos previos
     form.find('input, select, textarea').removeClass("is-invalid").css("border", "");
 
     camposAValidar.forEach(function(campo) {
@@ -137,12 +159,10 @@ $(document).on("click", ".btn-guardar-custom", function(e){
         
         if ($input.length > 0) {
             var valor = $input.val() ? $input.val().trim() : "";
-            
-            // Si editamos, la imagen no es obligatoria
             var esEdicion = form.find('input[name="idItem"]').length > 0;
+
             if (campo.id.includes("img_") && esEdicion) return;
 
-            // Validación: Vacío, null o "0" (excepto descuento y orden que pueden ser 0)
             var esExcepcionCero = campo.id.includes("discount") || campo.id.includes("order");
 
             if (valor === "" || valor === "null" || (valor === "0" && !esExcepcionCero)) {
@@ -165,15 +185,15 @@ $(document).on("click", ".btn-guardar-custom", function(e){
 /* FEEDBACK VISUAL EN TIEMPO REAL */
 $(document).on("input change", "input, select, textarea", function(){
     var id = $(this).attr("id") ? $(this).attr("id").toLowerCase() : "";
-    var val = $(this).val().trim();
+    var name = $(this).attr("name") ? $(this).attr("name").toLowerCase() : "";
+    var val = $(this).val() ? $(this).val().trim() : "";
 
-    // No tocar utilidad en compras
-    if (id.includes("utility") || id.includes("utilidad")) return;
+    if (id.includes("utility") || id.includes("utilidad") || name.includes("utility")) return;
 
     if (val !== "" && val !== "null") {
-        $(this).css("border", "2px solid #28a745").removeClass("is-invalid");
+        $(this).css("border", "2px solid #28a745").removeClass("is-invalid").addClass("is-valid");
     } else {
-        $(this).css("border", "2px solid red");
+        $(this).css("border", "2px solid red").addClass("is-invalid").removeClass("is-valid");
     }
 });
 </script>

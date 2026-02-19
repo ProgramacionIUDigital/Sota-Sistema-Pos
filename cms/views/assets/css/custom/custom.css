@@ -55,3 +55,77 @@ label {
     margin-bottom: 0px !important;
     font-size: 14px;
 }
+
+/* ============================= */
+/* ESTABILIDAD GLOBAL DEL LAYOUT */
+/* ============================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ===== CARD DE TABLA ===== */
+
+#cardTable {
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== CONTENEDOR TABLA ===== */
+
+.table-responsive {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 420px;
+  max-height: 70vh;
+}
+
+/* ===== TABLA ===== */
+
+#mainDynamicTable {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* ===== CUERPO DE TABLA ===== */
+
+#loadTable {
+  min-height: 300px;
+}
+
+/* ===== FILAS ===== */
+
+#loadTable tr {
+  height: 48px;
+}
+
+/* ===== HEADER ESTABLE ===== */
+
+.card-header {
+  min-height: 60px;
+}
+
+/* ===== BUSCADOR ===== */
+
+#smartSearch {
+  transition: none !important;
+}
+
+/* ===== EVITA SALTOS FLEX ===== */
+
+.d-flex,
+.d-lg-flex {
+  min-height: 48px;
+}
+
+/* ===== ANIMACION SUAVE AL ELIMINAR FILAS ===== */
+
+.row-deleting {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.25s ease;
+}
+
