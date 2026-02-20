@@ -20,164 +20,157 @@ $table = ($table->status == 200) ? $table->results : array();
 
 <?php if (!empty($routesArray[1]) && $routesArray[1] == "manage"): ?>
 
-<?php include "manage/manage.php"; ?>
+    <?php include "manage/manage.php"; ?>
 
 <?php else: ?>
 
 <div class="col-12 mb-3">
 
-<div class="card rounded p-3 w-100 shadow-sm">
+    <div class="card rounded p-3 w-100 shadow-sm">
 
-<!-- ================= HEADER ================= -->
+        <div class="card-header bg-white border-0">
 
-<div class="card-header bg-white border-0">
+            <div class="d-flex align-items-center justify-content-between">
 
-<div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
 
-<!-- IZQUIERDA -->
-<div class="d-flex align-items-center gap-2">
+                    <a href="/<?php echo $module->url_page ?>/manage"
+                        class="btn btn-primary btn-sm">
+                        Agregar registro
+                    </a>
 
-<a href="/<?php echo $module->url_page ?>/manage"
-class="btn btn-primary btn-sm">
-Agregar registro
-</a>
+                    <button type="button"
+                        class="btn btn-danger btn-sm btnDeleteCentral">
+                        Eliminar seleccionados
+                    </button>
 
-<button type="button"
-class="btn btn-danger btn-sm btnDeleteCentral">
-Eliminar seleccionados
-</button>
+                </div>
 
-</div>
+                <div class="flex-grow-1 d-flex justify-content-center">
 
-<!-- BUSCADOR -->
-<div class="flex-grow-1 d-flex justify-content-center">
+                    <div class="position-relative" style="width:260px;">
 
-<div class="position-relative" style="width:260px;">
+                        <input type="text"
+                            id="smartSearch"
+                            class="form-control rounded-pill form-control-sm pe-5"
+                            placeholder="Buscar...">
 
-<input type="text"
-id="smartSearch"
-class="form-control rounded-pill form-control-sm pe-5"
-placeholder="Buscar...">
+                        <i class="bi bi-search position-absolute"
+                            style="right:35px; top:7px; color:#aaa;"></i>
 
-<i class="bi bi-search position-absolute"
-style="right:35px; top:7px; color:#aaa;"></i>
+                        <i class="bi bi-x-circle-fill position-absolute"
+                            id="clearSearch"
+                            style="right:12px; top:7px; cursor:pointer; display:none; color:#dc3545;"></i>
 
-<i class="bi bi-x-circle-fill position-absolute"
-id="clearSearch"
-style="right:12px; top:7px; cursor:pointer; display:none; color:#dc3545;"></i>
+                    </div>
 
-</div>
+                </div>
 
-</div>
+                <?php if ($_SESSION["admin"]->rol_admin == "superadmin"): ?>
 
-<!-- EDITAR MÓDULO -->
-<?php if ($_SESSION["admin"]->rol_admin == "superadmin"): ?>
+                    <div class="d-flex align-items-center border rounded bg-white shadow-sm">
 
-<div class="d-flex align-items-center border rounded bg-white shadow-sm">
+                        <button type="button"
+                            class="btn btn-sm text-muted myModule"
+                            item='<?php echo json_encode($module) ?>'
+                            idPage="<?php echo $page->results[0]->id_page ?>">
 
-<button type="button"
-class="btn btn-sm text-muted myModule"
-item='<?php echo json_encode($module) ?>'
-idPage="<?php echo $page->results[0]->id_page ?>">
+                            <i class="bi bi-pencil-square"></i>
+                            <span class="small fw-bold ms-1">Editar módulo</span>
 
-<i class="bi bi-pencil-square"></i>
-<span class="small fw-bold ms-1">Editar módulo</span>
+                        </button>
 
-</button>
+                        <button type="button"
+                            class="btn btn-sm text-muted deleteModule"
+                            idModule=<?php echo base64_encode($module->id_module) ?>>
 
-<button type="button"
-class="btn btn-sm text-muted deleteModule"
-idModule=<?php echo base64_encode($module->id_module) ?>>
+                            <i class="bi bi-trash"></i>
 
-<i class="bi bi-trash"></i>
+                        </button>
 
-</button>
+                    </div>
 
-</div>
+                <?php endif ?>
 
-<?php endif ?>
+            </div>
 
-</div>
+        </div>
 
-</div>
+        <div class="card-body">
 
-<!-- ================= TABLA ================= -->
+            <div class="table-responsive">
 
-<div class="card-body">
+                <table class="table table-hover align-middle">
 
-<div class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><input type="checkbox" id="checkAll"></th>
 
-<table class="table table-hover align-middle">
+                            <?php foreach ($columns as $item): ?>
+                                <?php if ($item->visible_column == 1): ?>
+                                    <th><?php echo $item->alias_column ?></th>
+                                <?php endif ?>
+                            <?php endforeach ?>
 
-<thead>
-<tr>
-<th>#</th>
-<th><input type="checkbox" id="checkAll"></th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
 
-<?php foreach ($columns as $item): ?>
-<?php if ($item->visible_column == 1): ?>
-<th><?php echo $item->alias_column ?></th>
-<?php endif ?>
-<?php endforeach ?>
+                    <tbody id="loadTable">
 
-<th class="text-center">Acciones</th>
-</tr>
-</thead>
+                        <?php foreach ($table as $key => $value):
+                            $value = (array)$value;
+                            $idItem = $value["id_".$module->suffix_module];
+                        ?>
 
-<tbody id="loadTable">
+                            <tr>
 
-<?php foreach ($table as $key => $value):
-$value = (array)$value;
-$idItem = $value["id_".$module->suffix_module];
-?>
+                                <td><?php echo ($key+1) ?></td>
 
-<tr>
+                                <td>
+                                    <input type="checkbox"
+                                        class="checkItem"
+                                        value="<?php echo base64_encode($idItem) ?>">
+                                </td>
 
-<td><?php echo ($key+1) ?></td>
+                                <?php foreach ($columns as $item): ?>
+                                    <?php if ($item->visible_column == 1): ?>
+                                        <td>
+                                            <?php
+                                            $val = urldecode($value[$item->title_column]);
 
-<td>
-<input type="checkbox"
-class="checkItem"
-value="<?php echo base64_encode($idItem) ?>">
-</td>
+                                            if($item->type_column == "image"){
+                                                echo '<img src="'.$val.'" class="rounded shadow-sm"
+                                                style="width:45px;height:45px;object-fit:cover;">';
+                                            }else{
+                                                echo TemplateController::reduceText($val,25);
+                                            }
+                                            ?>
+                                        </td>
+                                    <?php endif ?>
+                                <?php endforeach ?>
 
-<?php foreach ($columns as $item): ?>
-<?php if ($item->visible_column == 1): ?>
-<td>
-<?php
-$val = urldecode($value[$item->title_column]);
+                                <td class="text-center">
 
-if($item->type_column == "image"){
-echo '<img src="'.$val.'" class="rounded shadow-sm"
-style="width:45px;height:45px;object-fit:cover;">';
-}else{
-echo TemplateController::reduceText($val,25);
-}
-?>
-</td>
-<?php endif ?>
-<?php endforeach ?>
+                                    <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="eliminarAhora('<?php echo base64_encode($idItem) ?>')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
 
-<td class="text-center">
+                                </td>
 
-<button type="button"
-class="btn btn-danger btn-sm"
-onclick="eliminarAhora('<?php echo base64_encode($idItem) ?>')">
-<i class="bi bi-trash"></i>
-</button>
+                            </tr>
 
-</td>
+                        <?php endforeach ?>
 
-</tr>
+                    </tbody>
+                </table>
 
-<?php endforeach ?>
-
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -325,3 +318,12 @@ $("#checkAll").prop("checked", false);
 </script>
 
 <?php endif ?>
+
+<?php 
+/*=============================================
+CARGAMOS EL MODAL AL FINAL PARA NO INTERFERIR
+=============================================*/
+if (!empty($routesArray[1]) && $routesArray[1] == "manage"){
+    include "views/modules/modals/files.php"; 
+}
+?>
