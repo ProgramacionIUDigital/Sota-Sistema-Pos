@@ -140,11 +140,46 @@ $table = ($table->status == 200) ? $table->results : array();
                                             <?php
                                             $val = urldecode($value[$item->title_column]);
 
-                                            if($item->type_column == "image"){
+                                            /* =============================================
+                                            RECONOCIMIENTO DE SUCURSALES (OFFICES)
+                                            =============================================*/
+                                            if($item->type_column == "relations" && $item->matrix_column == "offices"){
+
+                                                if($item->matrix_column != null && $value[$item->title_column] > 0){
+
+                                                    $urlRel = "relations?rel=modules,pages&type=module,page&linkTo=type_module,title_module&equalTo=tables,".$item->matrix_column."&select=url_page,suffix_module";
+                                                    $resRel = CurlController::request($urlRel,"GET",array());
+                                                    
+                                                    if($resRel->status == 200){
+                                                        $urlPage = $resRel->results[0]->url_page;
+                                                        $suffixModule = $resRel->results[0]->suffix_module;
+
+                                                        $urlData = $item->matrix_column.'?linkTo=id_'.$suffixModule."&equalTo=".$value[$item->title_column];
+                                                        $relation = CurlController::request($urlData,"GET",array());
+                                                        
+                                                        if($relation->status == 200){
+                                                            $arrayRelation = (array)$relation->results[0];
+                                                            // Mostramos el nombre (segunda columna de la tabla relacionada)
+                                                            echo '<a href="'.$urlPage.'/manage/'.base64_encode($value[$item->title_column]).'" target="_blank" class="badge border rounded bg-indigo text-white">'.urldecode($arrayRelation[array_keys($arrayRelation)[1]]).'</a>';
+                                                        } else {
+                                                            echo $value[$item->title_column];
+                                                        }
+                                                    } else {
+                                                        echo $value[$item->title_column];
+                                                    }
+                                                }else{
+                                                    echo $value[$item->title_column]; 
+                                                }
+
+                                            } else if($item->type_column == "image"){
+
                                                 echo '<img src="'.$val.'" class="rounded shadow-sm"
                                                 style="width:45px;height:45px;object-fit:cover;">';
-                                            }else{
+
+                                            } else {
+
                                                 echo TemplateController::reduceText($val,25);
+
                                             }
                                             ?>
                                         </td>
@@ -174,155 +209,113 @@ $table = ($table->status == 200) ? $table->results : array();
 </div>
 
 <script>
-
 /* ================= BUSCAR ================= */
-
 $("#smartSearch").on("keyup", function(){
-
-let value = $(this).val().toLowerCase();
-
-$("#loadTable tr").filter(function(){
-$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-});
-
-$("#clearSearch").toggle(value.length > 0);
-
+    let value = $(this).val().toLowerCase();
+    $("#loadTable tr").filter(function(){
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+    $("#clearSearch").toggle(value.length > 0);
 });
 
 /* LIMPIAR */
 $("#clearSearch").on("click", function(){
-$("#smartSearch").val("");
-$(this).hide();
-$("#loadTable tr").show();
+    $("#smartSearch").val("");
+    $(this).hide();
+    $("#loadTable tr").show();
 });
 
 /* CHECK ALL */
 $("#checkAll").on("click", function(){
-$(".checkItem").prop("checked", $(this).prop("checked"));
+    $(".checkItem").prop("checked", $(this).prop("checked"));
 });
-
 
 /* ================= ELIMINAR UNO ================= */
-
 function eliminarAhora(id){
-
-Swal.fire({
-title: '¿Eliminar este registro?',
-text: 'Esta acción es irreversible',
-icon: 'warning',
-showCancelButton: true,
-confirmButtonColor: '#dc3545',
-cancelButtonText: 'Cancelar',
-confirmButtonText: 'Sí, eliminar'
-}).then((r)=>{
-
-if(r.isConfirmed){
-
-var datos = new FormData();
-
-datos.append("idPageDelete", id);
-datos.append("table", "<?php echo $module->title_module ?>");
-datos.append("column", "id_<?php echo $module->suffix_module ?>");
-datos.append("token", localStorage.getItem("tokenAdmin"));
-
-$.ajax({
-url:"ajax/pages.ajax.php",
-method:"POST",
-data:datos,
-cache:false,
-contentType:false,
-processData:false,
-success:function(res){
-
-if(res.trim()=="200"){
-location.reload();
-}else{
-Swal.fire('Error','No se pudo eliminar','error');
+    Swal.fire({
+        title: '¿Eliminar este registro?',
+        text: 'Esta acción es irreversible',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sí, eliminar'
+    }).then((r)=>{
+        if(r.isConfirmed){
+            var datos = new FormData();
+            datos.append("idPageDelete", id);
+            datos.append("table", "<?php echo $module->title_module ?>");
+            datos.append("column", "id_<?php echo $module->suffix_module ?>");
+            datos.append("token", localStorage.getItem("tokenAdmin"));
+            $.ajax({
+                url:"ajax/pages.ajax.php",
+                method:"POST",
+                data:datos,
+                cache:false,
+                contentType:false,
+                processData:false,
+                success:function(res){
+                    if(res.trim()=="200"){
+                        location.reload();
+                    }else{
+                        Swal.fire('Error','No se pudo eliminar','error');
+                    }
+                }
+            });
+        }else{
+            $(".checkItem").prop("checked", false);
+            $("#checkAll").prop("checked", false);
+        }
+    });
 }
-
-}
-});
-
-}else{
-
-$(".checkItem").prop("checked", false);
-$("#checkAll").prop("checked", false);
-
-}
-
-});
-
-}
-
 
 /* ================= ELIMINAR MULTIPLE ================= */
-
 $(".btnDeleteCentral").on("click", function(){
-
-let ids=[];
-
-$(".checkItem:checked").each(function(){
-ids.push($(this).val());
+    let ids=[];
+    $(".checkItem:checked").each(function(){
+        ids.push($(this).val());
+    });
+    if(ids.length==0){
+        Swal.fire('Seleccione registros','','warning');
+        return;
+    }
+    Swal.fire({
+        title: '¿Eliminar registros seleccionados?',
+        text: 'Esta acción es irreversible',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((r)=>{
+        if(r.isConfirmed){
+            ids.forEach(function(id){
+                var datos = new FormData();
+                datos.append("idPageDelete", id);
+                datos.append("table", "<?php echo $module->title_module ?>");
+                datos.append("column", "id_<?php echo $module->suffix_module ?>");
+                datos.append("token", localStorage.getItem("tokenAdmin"));
+                $.ajax({
+                    url:"ajax/pages.ajax.php",
+                    method:"POST",
+                    data:datos,
+                    cache:false,
+                    contentType:false,
+                    processData:false
+                });
+            });
+            setTimeout(()=>location.reload(),700);
+        }else{
+            $(".checkItem").prop("checked", false);
+            $("#checkAll").prop("checked", false);
+        }
+    });
 });
-
-if(ids.length==0){
-Swal.fire('Seleccione registros','','warning');
-return;
-}
-
-Swal.fire({
-title: '¿Eliminar registros seleccionados?',
-text: 'Esta acción es irreversible',
-icon: 'warning',
-showCancelButton: true,
-confirmButtonColor: '#dc3545',
-confirmButtonText: 'Sí, eliminar',
-cancelButtonText: 'Cancelar'
-}).then((r)=>{
-
-if(r.isConfirmed){
-
-ids.forEach(function(id){
-
-var datos = new FormData();
-
-datos.append("idPageDelete", id);
-datos.append("table", "<?php echo $module->title_module ?>");
-datos.append("column", "id_<?php echo $module->suffix_module ?>");
-datos.append("token", localStorage.getItem("tokenAdmin"));
-
-$.ajax({
-url:"ajax/pages.ajax.php",
-method:"POST",
-data:datos,
-cache:false,
-contentType:false,
-processData:false
-});
-
-});
-
-setTimeout(()=>location.reload(),700);
-
-}else{
-
-$(".checkItem").prop("checked", false);
-$("#checkAll").prop("checked", false);
-
-}
-
-});
-
-});
-
 </script>
 
 <?php endif ?>
 
 <?php 
-/*=============================================
-CARGAMOS EL MODAL AL FINAL PARA NO INTERFERIR
-=============================================*/
 if (!empty($routesArray[1]) && $routesArray[1] == "manage"){
     include "views/modules/modals/files.php"; 
 }

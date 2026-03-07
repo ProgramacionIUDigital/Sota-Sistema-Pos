@@ -3,13 +3,15 @@
 =============================================*/
 
 function calcularCompra() {
-    // Capturamos los valores directamente
-    // parseFloat leerá correctamente el punto decimal del input type="number"
-    let costo = parseFloat($("#cost_purchase").val()) || 0;
-    let cantidad = parseFloat($("#qty_purchase").val()) || 0;
+    // Capturamos los valores y reemplazamos comas por puntos antes de parseFloat
+    let costRaw = $("#cost_purchase").val() ? $("#cost_purchase").val().toString().replace(/,/g, ".") : "0";
+    let qtyRaw = $("#qty_purchase").val() ? $("#qty_purchase").val().toString().replace(/,/g, ".") : "0";
     
-    // Para la utilidad, quitamos el % si existe antes de convertir
-    let utilidadRaw = $("#utility_purchase").val() ? $("#utility_purchase").val().toString().replace('%', '') : "0";
+    let costo = parseFloat(costRaw) || 0;
+    let cantidad = parseFloat(qtyRaw) || 0;
+    
+    // Para la utilidad, quitamos el % y también reemplazamos la coma por punto
+    let utilidadRaw = $("#utility_purchase").val() ? $("#utility_purchase").val().toString().replace('%', '').replace(/,/g, ".") : "0";
     let utilidad = parseFloat(utilidadRaw) || 0;
 
     // --- CÁLCULO DE INVERSIÓN ---
@@ -27,7 +29,15 @@ function calcularCompra() {
 =============================================*/
 
 // Usamos 'input' porque es el evento más nativo y rápido para type="number"
+// Agregamos un pequeño reemplazo visual inmediato para que el usuario vea el punto
 $(document).on("input change", "#cost_purchase, #qty_purchase, #utility_purchase", function() {
+    
+    // Si el usuario escribe una coma, la cambiamos por punto en tiempo real
+    let val = $(this).val();
+    if(val.includes(",")){
+        $(this).val(val.replace(/,/g, "."));
+    }
+
     calcularCompra();
 });
 
