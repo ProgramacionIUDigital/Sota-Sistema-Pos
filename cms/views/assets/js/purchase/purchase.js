@@ -1,68 +1,63 @@
 /*=============================================
-1. FUNCIONES DE CÁLCULO
+1. FUNCIÓN PARA PARSEAR NÚMEROS
+   Entrada: "1.234,45" → 1234.45
 =============================================*/
-
-function calcularCompra() {
-    // Capturamos los valores directamente
-    let costo = parseFloat($("#cost_purchase").val()) || 0;
-    let cantidad = parseFloat($("#qty_purchase").val()) || 0;
-    
-    // Para la utilidad, quitamos el % si existe antes de convertir
-    let utilidadRaw = $("#utility_purchase").val() ? $("#utility_purchase").val().toString().replace('%', '') : "0";
-    let utilidad = parseFloat(utilidadRaw) || 0;
-
-    // --- CÁLCULO DE INVERSIÓN ---
-    let inversion = costo * cantidad;
-    // MODIFICACIÓN: Redondeamos al entero más cercano para quitar decimales
-    $("#invest_purchase").val(Math.round(inversion));
-
-    // --- CÁLCULO DE PRECIO DE VENTA ---
-    let precioVenta = costo + (costo * (utilidad / 100));
-    $("#price_purchase").val(precioVenta.toFixed(2));
+function parseMoney(val) {
+    if (!val) return 0;
+    let clean = val.toString().replace(/\./g, '').replace(',', '.');
+    let num = parseFloat(clean);
+    return isNaN(num) ? 0 : num;
 }
 
 /*=============================================
-2. EVENTOS DE DISPARO
+2. TRUNCAR A 2 DECIMALES (sin redondear)
+   Ej: 13.695 → 13.69
 =============================================*/
-
-$(document).on("input change", "#cost_purchase, #qty_purchase, #utility_purchase", function() {
-    calcularCompra();
-});
+function truncate2(value) {
+    return Math.trunc(value * 100) / 100;
+}
 
 /*=============================================
-3. ELIMINAR REGISTRO (SIN TOCAR TU LÓGICA)
+3. FORMATO DE DINERO
+   Entrada: 1234.45 → "1.234,45"
 =============================================*/
+function formatMoney(value) {
+    let v       = truncate2(value);
+    let neg     = v < 0;
+    let abs     = Math.abs(v);
+    let integer = Math.floor(abs);
+    let decimal = Math.round((abs - integer) * 100);
+    let intStr  = integer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    let decStr  = decimal.toString().padStart(2, '0');
+    return (neg ? '-' : '') + intStr + ',' + decStr;
+}
 
-$(document).on("click", ".deleteItem", function(e) {
-    e.preventDefault();
-    var idItem = $(this).attr("idItem");
-    var table = $(this).attr("table");
-    var suffix = $(this).attr("suffix");
+/*=============================================
+4. FUNCIÓN DE CÁLCULO
+=============================================*/
+function calcularCompra() {
 
-    fncSweetAlert("confirm", "¿Está seguro de eliminar este registro?", "Esta acción no se puede deshacer").then(function(result) {
-        if (result.value) {
-            var data = new FormData();
-            data.append("idPageDelete", idItem);
-            data.append("table", table);
-            data.append("column", "id_" + suffix);
-            data.append("token", localStorage.getItem("tokenAdmin"));
+    let costo    = parseMoney($("#cost_purchase").val());
+    let cantidad = parseMoney($("#qty_purchase").val());
 
-            $.ajax({
-                url: "ajax/pages.ajax.php",
-                method: "POST",
-                data: data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response == 200) {
-                        fncFormatHtml("success", "El registro ha sido eliminado correctamente");
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1000);
-                    }
-                }
-            });
-        }
-    });
+    // Utilidad: quitar el % si existe
+    let utilidadRaw = $("#utility_purchase").val()
+        ? $("#utility_purchase").val().toString().replace('%', '').trim()
+        : "0";
+    let utilidad = parseFloat(utilidadRaw) || 0;
+
+    // --- INVERSIÓN: costo × cantidad ---
+    let inversion = costo * cantidad;
+    $("#invest_purchase").val(formatMoney(inversion));
+
+    // --- PRECIO DE VENTA: costo + (costo × utilidad%) ---
+    let precioVenta = costo + (costo * utilidad / 100);
+    $("#price_purchase").val(formatMoney(precioVenta));
+}
+
+/*=============================================
+5. EVENTOS DE DISPARO
+=============================================*/
+$(document).on("input change", "#cost_purchase, #qty_purchase, #utility_purchase", function() {
+    calcularCompra();
 });

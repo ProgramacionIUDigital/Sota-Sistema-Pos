@@ -99,10 +99,14 @@ $(document).on("input", "[id*='phone'], [id*='contact'], [id*='qty'], [id*='dni'
     }
 });
 
+/* =============================================
+   PERMITE: letras, números, espacios y °
+   AFECTA:  supplier, name, lastname, title
+============================================= */
 $(document).on("input", "[id*='supplier'], [id*='name'], [id*='lastname'], [id*='title']", function(){
-    if (this.value && /[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/.test(this.value)) {
-        alert("solo texto");
-        this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '');
+    if (this.value && /[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ °\.\-\_\+\#\&]/.test(this.value)) {
+        alert("solo texto y números");
+        this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ °\.\-\_\+\#\&]/g, '');
     }
     
     // Capitalizar: Primera letra de cada palabra en Mayúscula, el resto en Minúscula
@@ -182,14 +186,12 @@ $(document).on("click", ".btn-guardar-custom", function(e){
 
             var esExcepcionCero = campo.id.includes("discount") || campo.id.includes("order");
 
-            // VALIDACIÓN CORREO (Sin el return que bloqueaba el resto)
             if (idInput.includes("email") && valor !== "" && !validarEmail(valor)) {
                 alert("Agregue un correo correcto");
                 $input.val(""); 
                 faltantes.push("- " + campo.nombre + " (Formato incorrecto)");
                 $input.css("border", "2px solid red").addClass("is-invalid");
             } 
-            // VALIDACIÓN CAMPOS VACÍOS (Aquí entrará el Apellido)
             else if (valor === "" || valor === "null" || (valor === "0" && !esExcepcionCero)) {
                 faltantes.push("- " + campo.nombre);
                 $input.css("border", "2px solid red").addClass("is-invalid");
