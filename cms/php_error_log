@@ -1,0 +1,56 @@
+[13-Feb-2026 15:58:20 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 33
+[13-Feb-2026 15:58:20 Europe/Berlin] PHP Warning:  Attempt to read property "results" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 15:58:20 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 15:58:20 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 9
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 24
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 25
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 341
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 345
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 65
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 83
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 100
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 101
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "color_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 114
+[13-Feb-2026 15:58:21 Europe/Berlin] PHP Warning:  Attempt to read property "back_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 129
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 33
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "results" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 9
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 24
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 25
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 296
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 300
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 65
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 83
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 100
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 101
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "color_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 114
+[13-Feb-2026 15:58:22 Europe/Berlin] PHP Warning:  Attempt to read property "back_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 129
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 33
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "results" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 9
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 24
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 25
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 296
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 300
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 65
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 83
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 100
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 101
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "color_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 114
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "back_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 129
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 33
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "results" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\pos\cms\views\template.php on line 39
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 9
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 24
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\sidebar.php on line 25
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 296
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "status" on null in C:\xampp\htdocs\pos\cms\views\template.php on line 300
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "title_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 65
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "symbol_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 83
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 100
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "font_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 101
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "color_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 114
+[13-Feb-2026 16:21:22 Europe/Berlin] PHP Warning:  Attempt to read property "back_admin" on null in C:\xampp\htdocs\pos\cms\views\modules\modals\profile.php on line 129
