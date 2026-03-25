@@ -339,8 +339,19 @@ include "views/modules/modals/selects.php";
 <script>
 /* ================= SELECTOR LÍMITE ================= */
 $("#selectLimit").on("change", function(){
+    var limit = $(this).val();
+    fncSweetAlert("loading", "Cargando " + limit + " registros...", "");
     var base = "<?php echo strtok($_SERVER['REQUEST_URI'],'?') ?>";
-    window.location.href = base + "?page=1&limit=" + $(this).val();
+    setTimeout(function(){
+        window.location.href = base + "?page=1&limit=" + limit;
+    }, 300);
+});
+
+/* ================= ALERTA EN PAGINACIÓN ================= */
+$(document).on("click", ".pagination .page-link", function(e){
+    var parent = $(this).closest(".page-item");
+    if(parent.hasClass("disabled") || parent.hasClass("active")) return;
+    fncSweetAlert("loading", "Cargando registros...", "");
 });
 
 /* ================= ORDENAMIENTO AJAX ================= */
