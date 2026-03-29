@@ -99,16 +99,20 @@ function loadAjaxTable(contentModule,orderBy,orderMode,limit,page,filter,search,
     var startTime = new Date().getTime();
 
     if(filter == "search"){
-        var textoPrompt = (search == "") ? "Restableciendo registros..." : "Buscando tu producto...";
-        
-        // Bajamos opacidad sutilmente (0.8 es nítido pero indica carga)
-        $("#loadTable").css("opacity", "0.7");
-        
-        $("#loadTable").html(`<tr><td colspan="20" class="text-center py-5">
-            <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div><br>
-            <span class="fs-5 text-dark fw-bold">${textoPrompt}</span>
-        </td></tr>`);
-        $(".blockFooter").hide();
+
+        if(search == ""){
+            /* Restableciendo: solo spinner sin texto */
+            $("#loadTable").css("opacity", "0.5");
+        } else {
+            /* Buscando: spinner con texto */
+            $("#loadTable").css("opacity", "0.7");
+            $("#loadTable").html(`<tr><td colspan="20" class="text-center py-5">
+                <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div><br>
+                <span class="fs-5 text-dark fw-bold">Buscando tu producto...</span>
+            </td></tr>`);
+            $(".blockFooter").hide();
+        }
+
     } else {
         fncSweetAlert("loading", "Cargando registros...", "");
     }

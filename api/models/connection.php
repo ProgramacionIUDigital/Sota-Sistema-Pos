@@ -5,7 +5,7 @@ require_once "get.model.php";
 class Connection{
 
 	/*=============================================
-	Información de la base de datos pos
+	Información de la base de datos
 	=============================================*/
 
 	static public function infoDatabase(){
