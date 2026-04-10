@@ -29,8 +29,9 @@ $table = ($table->status == 200) ? $table->results : array();
 Total de registros para paginación
 =============================================*/
 $urlTotal = $module->title_module."?select=id_".$module->suffix_module;
-$totalData = CurlController::request($urlTotal,"GET",array())->total;
-$totalPages = ceil($totalData / $limit);
+$resTotal   = CurlController::request($urlTotal,"GET",array());
+$totalData  = isset($resTotal->total) ? (int)$resTotal->total : 0;
+$totalPages = ($limit > 0 && $totalData > 0) ? ceil($totalData/$limit) : 0;
 
 /* Caché de relaciones para no llamar la API dos veces por la misma relación */
 $cacheRel = array();
@@ -226,7 +227,10 @@ $cacheRel = array();
                                 <td class="text-center">
 
                                     <button type="button"
-                                        class="btn btn-danger btn-sm"
+                                        class="btn btn-danger btn-sm deleteItem"
+                                        idItem="<?php echo base64_encode($idItem) ?>"
+                                        table="<?php echo $module->title_module ?>"
+                                        suffix="<?php echo $module->suffix_module ?>"
                                         onclick="eliminarAhora('<?php echo base64_encode($idItem) ?>')">
                                         <i class="bi bi-trash"></i>
                                     </button>

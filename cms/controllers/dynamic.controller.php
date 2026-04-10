@@ -27,8 +27,25 @@ class DynamicController{
 
 					if($value->type_column == "password" && !empty($_POST[$value->title_column])){
 						$fields.= $value->title_column."=".crypt(trim($_POST[$value->title_column]),'$2a$07$azybxcags23425sdg23sdfhsd$')."&";
+					
 					}else if($value->type_column == "email"){
-						$fields.= $value->title_column."=".trim($_POST[$value->title_column])."&";
+						
+						/*=============================================
+						Validación de Email Lado Servidor (Editar)
+						=============================================*/
+						$email_val = trim($_POST[$value->title_column]);
+
+						if (!filter_var($email_val, FILTER_VALIDATE_EMAIL)) {
+							echo '<script>
+								fncMatPreloader("off");
+								fncFormatInputs();
+								fncSweetAlert("error", "El formato del correo electrónico es inválido", "");
+							</script>';
+							return;
+						}
+
+						$fields.= $value->title_column."=".$email_val."&";
+
 					}else{
 						$fields.= $value->title_column."=".urlencode(trim($_POST[$value->title_column]))."&";
 					}
@@ -46,7 +63,7 @@ class DynamicController{
 								fncSweetAlert("success","El registro ha sido actualizado con éxito", "");
 								window.location.replace("/'.$module->url_page.'");
 							</script>';
-							exit(); // Detiene PHP inmediatamente
+							exit(); 
 						}
 					}
 				}
@@ -65,8 +82,25 @@ class DynamicController{
 
 					if($value->type_column == "password"){
 						$fields[$value->title_column] = crypt(trim($_POST[$value->title_column]),'$2a$07$azybxcags23425sdg23sdfhsd$');
+					
 					}else if($value->type_column == "email"){
-						$fields[$value->title_column] = trim($_POST[$value->title_column]);
+
+						/*=============================================
+						Validación de Email Lado Servidor (Crear)
+						=============================================*/
+						$email_val = trim($_POST[$value->title_column]);
+
+						if (!filter_var($email_val, FILTER_VALIDATE_EMAIL)) {
+							echo '<script>
+								fncMatPreloader("off");
+								fncFormatInputs();
+								fncSweetAlert("error", "El formato del correo electrónico es inválido", "");
+							</script>';
+							return;
+						}
+
+						$fields[$value->title_column] = $email_val;
+
 					}else{
 						$fields[$value->title_column] = urlencode(trim($_POST[$value->title_column]));
 					}
@@ -84,7 +118,7 @@ class DynamicController{
 								fncSweetAlert("success","El registro ha sido guardado con éxito", "");
 								window.location.replace("/'.$module->url_page.'");
 							</script>';
-							exit(); // Detiene PHP inmediatamente
+							exit(); 
 						}
 					}
 				}

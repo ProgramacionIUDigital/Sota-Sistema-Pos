@@ -90,7 +90,7 @@ $block2 = count($module->columns) - $block1;
 
 <script>
 /*=============================================
-VALIDACIONES DE TIPO (NÚMEROS Y TEXTO)
+VALIDACIONES DE TIPO (NÚMEROS Y TEXTO + NÚMEROS)
 =============================================*/
 $(document).on("input", "[id*='phone'], [id*='contact'], [id*='qty'], [id*='dni'], [id*='stock'], [id*='document']", function(){
     if (this.value && /[^0-9]/.test(this.value)) {
@@ -100,12 +100,13 @@ $(document).on("input", "[id*='phone'], [id*='contact'], [id*='qty'], [id*='dni'
 });
 
 $(document).on("input", "[id*='supplier'], [id*='name'], [id*='lastname'], [id*='title']", function(){
-    if (this.value && /[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/.test(this.value)) {
-        alert("solo texto");
-        this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '');
+    // Regex actualizada para permitir letras, números y espacios (iPhone 7, Salto 2)
+    var regex = /[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]/g;
+    if (this.value && regex.test(this.value)) {
+        alert("solo letras y numeros");
+        this.value = this.value.replace(regex, '');
     }
     
-    // Capitalizar: Primera letra de cada palabra en Mayúscula, el resto en Minúscula
     this.value = this.value.toLowerCase().replace(/(^|\s)\S/g, function(l) {
         return l.toUpperCase();
     });
@@ -125,7 +126,7 @@ $(document).on("click", ".btn-guardar-custom", function(e){
     var nombreModulo = moduleData.url_page; 
 
     /*=============================================
-    CONFIGURACIÓN POR MÓDULO
+    CONFIGURACIÓN POR MÓDULO (INCLUYE ÓRDENES)
     =============================================*/
     if (nombreModulo.includes("product")) {
         camposAValidar = [
@@ -141,6 +142,16 @@ $(document).on("click", ".btn-guardar-custom", function(e){
             { id: "cost",     nombre: "Costo" },
             { id: "qty",      nombre: "Cantidad" },
             { id: "contact",  nombre: "Teléfono" }
+        ];
+    } else if (nombreModulo.includes("order") || nombreModulo.includes("orden")) {
+        camposAValidar = [
+            { id: "transaction_order", nombre: "Transacción" },
+            { id: "id_admin_order",    nombre: "Vendedor" },
+            { id: "id_client_order",   nombre: "Cliente" },
+            { id: "subtotal_order",    nombre: "Subtotal" },
+            { id: "total_order",       nombre: "Total de la Orden" },
+            { id: "method_order",      nombre: "Método de Pago" },
+            { id: "id_office_order",   nombre: "Sucursal" }
         ];
     } else if (nombreModulo.includes("categor")) {
         camposAValidar = [
@@ -180,16 +191,14 @@ $(document).on("click", ".btn-guardar-custom", function(e){
 
             if (campo.id.includes("img_") && esEdicion) return;
 
-            var esExcepcionCero = campo.id.includes("discount") || campo.id.includes("order");
+            var esExcepcionCero = campo.id.includes("discount") || campo.id.includes("order_category");
 
-            // VALIDACIÓN CORREO (Sin el return que bloqueaba el resto)
             if (idInput.includes("email") && valor !== "" && !validarEmail(valor)) {
                 alert("Agregue un correo correcto");
                 $input.val(""); 
                 faltantes.push("- " + campo.nombre + " (Formato incorrecto)");
                 $input.css("border", "2px solid red").addClass("is-invalid");
             } 
-            // VALIDACIÓN CAMPOS VACÍOS (Aquí entrará el Apellido)
             else if (valor === "" || valor === "null" || (valor === "0" && !esExcepcionCero)) {
                 faltantes.push("- " + campo.nombre);
                 $input.css("border", "2px solid red").addClass("is-invalid");
